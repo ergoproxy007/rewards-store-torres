@@ -1,11 +1,13 @@
-import LandingPageLayout from "./pages/Landing/components/LandingPageLayout";
+import React from "react";
+import StoreProvider from "./context/models/StoreProvider";
+import LandingStore from "./pages/Landing/components/LandingStore";
 
-function App() {
+export default function App() {
   return (
-    <div>
-      <LandingPageLayout />
-    </div>
+    <StoreProvider>
+      <div>
+        <LandingStore />
+      </div>
+    </StoreProvider>
   );
 }
-
-export default App;
