@@ -1,12 +1,12 @@
 import React from "react";
-import StoreProvider from "./context/models/StoreProvider";
-import LandingStore from "./pages/Landing/components/LandingStore";
+import StoreProvider from "./context/StoreProvider";
+import LandingShop from "./pages/Landing/components/LandingShop";
 
 export default function App() {
   return (
     <StoreProvider>
       <div>
-        <LandingStore />
+        <LandingShop />
       </div>
     </StoreProvider>
   );
