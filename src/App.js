@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { LandingContainer } from 'pages/Landing/containers/LandingContainer';
 import { StoreProvider } from "./context/StoreContext";
-import { LandingShop } from "./pages/Landing/components/LandingShop";
 
 export default function App() {
   return (
     <StoreProvider>
       <div>
-        <LandingShop />
+        <LandingContainer />
       </div>
     </StoreProvider>
   );

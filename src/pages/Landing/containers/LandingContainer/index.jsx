@@ -5,7 +5,7 @@ import { HeaderShop } from 'pages/Landing/components/HeaderShop';
 import { MainShop } from 'pages/Landing/components/MainShop';
 import { FooterShop } from 'pages/Landing/components/FooterShop';
 
-export const LandingShop = () => {
+export const LandingContainer = () => {
   const {
     data: { user },
   } = useContext(StoreContext);
