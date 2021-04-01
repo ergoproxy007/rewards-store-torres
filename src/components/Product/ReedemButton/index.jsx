@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
-export const RedimirButton = (props) => {
+
+export const ReedemButton = (props) => {
     return (
         <CardActions>
             <Button size="small" color="primary">

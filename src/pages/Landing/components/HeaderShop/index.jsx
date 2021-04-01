@@ -1,11 +1,17 @@
+import React, { useContext } from 'react';
+import { StoreContext } from 'context/StoreContext';
 import AppBar from '@material-ui/core/AppBar';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Toolbar from '@material-ui/core/Toolbar';
-import Badge from '@material-ui/core/Badge';
-import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import { IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { AvatarLetters } from 'views/Avatar/AvatarLetters';
+import { AddPoint } from 'components/Point/AddPoint';
+import { withPoints } from 'components/Factory/withPoints';
+import BadgePointsContainer from 'components/Point/containers/BadgePointsContainer';
+
+import "./HeaderShop.css"
 
 const TextOnlyTooltip = withStyles({
     tooltip: {
@@ -21,47 +27,46 @@ const UserName = ({user}) => {
     return <span style={styles}>{name}</span>
 }
 
-const AvatarLetters = ({user}) => {
-    const fullName = user ? user.fullName : '';
-    const acronym = fullName.length > 2 ? fullName.split(" ").map(l=>l[0]).join("") : '?';
-    return <Avatar alt={fullName}>{acronym}</Avatar>
-}
-
-const StyledBadge = withStyles((theme) => ({
-    badge: {
-      right: -8,
-      top: 16,
-      border: `2px solid ${theme.palette.background.paper}`,
-      padding: '0 4px',
-      fontSize: '1rem',
-      color: 'white'
-    },
-}))(Badge);
-
-const ShoppingCartIconBadge = ({points}) => {
+const PointsContainer = ({points}) => {
     return (
-        <StyledBadge color="error" badgeContent={points} max={99999} >
+        <BadgePointsContainer colorType={"error"} maximum={99999} points={points}>
             <ShoppingCartIcon style={{ fontSize: 35, color: "#FFD700" }} />
-        </StyledBadge>
+        </BadgePointsContainer>
     );
 }
 
-export const HeaderShop = ({ user }) => {
+const AddPointContainer = ({title, update}) => {
+    const ButtonWithPoints = withPoints(AddPoint);
+    return (
+        <div className="container-addpoint">
+            <ButtonWithPoints title={title} update={update} />
+        </div>
+    );
+}
+
+export const HeaderShop = () => {
+    const subtitle = "haz agregado un total de";
+    const {
+        data: { user, amount },
+        mutations: { updateAmountPoints }
+    } = useContext(StoreContext);
+    const points = amount.points ? amount.points : user.points;
     return (
         <AppBar position="relative">
             <Toolbar>
                 <IconButton aria-label="cart">
                     {
-                        user?.points > 0 
-                        ? <ShoppingCartIconBadge points={user.points} />
+                        points > 0 
+                        ? <PointsContainer points={points} />
                         : <ShoppingCartIcon style={{ fontSize: 35, color: "#FFD700" }} />
                     }
                 </IconButton>
                 <TextOnlyTooltip title={<UserName user={user} />} placement="right">
-                    <IconButton style={{ marginLeft: '23px' }}>
+                    <IconButton style={{ marginLeft: "23px" }}>
                         <AvatarLetters user={user} />
                     </IconButton>
                 </TextOnlyTooltip>
+                <AddPointContainer title={subtitle} update={updateAmountPoints} />
             </Toolbar>
         </AppBar>
     );

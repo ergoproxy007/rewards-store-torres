@@ -1,11 +1,10 @@
 class RequestBuilder {
   constructor(url, headers) {
-    this.credentials = 'omit';
     this.url = url;
     this.headers = headers;
     this.credentials = 'omit';
-    this.mode = 'cors';
     this.referrerPolicy = 'no-referrer';
+    this.mode = 'cors';
   }
   setMethod(method) {
       this.method = method;
@@ -17,7 +16,7 @@ class RequestBuilder {
                 method: this.method,
                 credentials: this.credentials,
                 mode: this.mode,
-                referrerPolicy: this.referrerPolicy
+                referrerPolicy: this.referrerPolicy,
              });
   }
 }

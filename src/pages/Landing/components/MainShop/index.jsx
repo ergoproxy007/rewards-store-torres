@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { useStyles } from './styles';
-import { ProductContainer } from 'pages/Product/containers';
+import ProductContainer from 'components/Product/containers/ProductContainer';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 

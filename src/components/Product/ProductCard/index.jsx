@@ -2,7 +2,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import { RedimirButton } from '../RedimirButton';
+import { ReedemButton } from '../ReedemButton';
 import { makeStyles } from '@material-ui/core/styles';
 
 export const ProductCard = (props) => {
@@ -22,7 +22,7 @@ export const ProductCard = (props) => {
               Macbook Pro
           </Typography>
         </CardContent>
-        <RedimirButton />
+        <ReedemButton />
       </Card>
     );
 }
