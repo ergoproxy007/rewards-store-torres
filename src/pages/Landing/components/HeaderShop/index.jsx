@@ -8,10 +8,10 @@ import { IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { AvatarLetters } from 'views/Avatar/AvatarLetters';
 import { AddPoint } from 'components/Point/AddPoint';
-import { withPoints } from 'components/Factory/withPoints';
 import BadgePointsContainer from 'components/Point/containers/BadgePointsContainer';
+import { withPoints } from 'components/Factory/withPoints';
 
-import "./HeaderShop.css"
+import "./HeaderShop.css";
 
 const TextOnlyTooltip = withStyles({
     tooltip: {
