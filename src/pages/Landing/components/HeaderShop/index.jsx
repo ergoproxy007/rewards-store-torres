@@ -27,19 +27,19 @@ const UserName = ({user}) => {
     return <span style={styles}>{name}</span>
 }
 
-const PointsContainer = ({points}) => {
+const PointsContainer = ({points, badgeProps}) => {
     return (
-        <BadgePointsContainer colorType={"error"} maximum={99999} points={points}>
+        <BadgePointsContainer colorType={"error"} maximum={999999} points={points} badgeProps={badgeProps}>
             <ShoppingCartIcon style={{ fontSize: 35, color: "#FFD700" }} />
         </BadgePointsContainer>
     );
 }
 
-const AddPointContainer = ({title, update}) => {
+const AddPointContainer = ({title, pointsGiven, loading, update}) => {
     const ButtonWithPoints = withPoints(AddPoint);
     return (
         <div className="container-addpoint">
-            <ButtonWithPoints title={title} update={update} />
+            <ButtonWithPoints title={title} pointsGiven={pointsGiven} loading={loading} update={update} />
         </div>
     );
 }
@@ -47,7 +47,7 @@ const AddPointContainer = ({title, update}) => {
 export const HeaderShop = () => {
     const subtitle = "haz agregado un total de";
     const {
-        data: { user, amount },
+        data: { user, amount, badgeProps },
         mutations: { updateAmountPoints }
     } = useContext(StoreContext);
     const points = amount.points ? amount.points : user.points;
@@ -57,7 +57,7 @@ export const HeaderShop = () => {
                 <IconButton aria-label="cart">
                     {
                         points > 0 
-                        ? <PointsContainer points={points} />
+                        ? <PointsContainer points={points} badgeProps={badgeProps} />
                         : <ShoppingCartIcon style={{ fontSize: 35, color: "#FFD700" }} />
                     }
                 </IconButton>
@@ -66,7 +66,7 @@ export const HeaderShop = () => {
                         <AvatarLetters user={user} />
                     </IconButton>
                 </TextOnlyTooltip>
-                <AddPointContainer title={subtitle} update={updateAmountPoints} />
+                <AddPointContainer pointsGiven={amount.pointsGiven} loading={badgeProps.loading} title={subtitle} update={updateAmountPoints} />
             </Toolbar>
         </AppBar>
     );

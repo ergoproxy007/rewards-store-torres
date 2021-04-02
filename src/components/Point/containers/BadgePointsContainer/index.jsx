@@ -8,15 +8,15 @@ const StyledBadge = withStyles((theme) => ({
       border: `2px solid ${theme.palette.background.paper}`,
       padding: '0 4px',
       fontSize: '1rem',
-      color: 'white'
+      color: props => props.focusColor
     },
 }))(Badge);
 
 /* applying pattern container  */
 const BadgePointsContainer = (props) => {
-    const {colorType, points, maximum, children} = props;
+    const {colorType, points, maximum, badgeProps, children} = props;
     return (
-        <StyledBadge color={colorType} badgeContent={points} max={maximum} >
+        <StyledBadge focusColor={badgeProps.focusColor} color={colorType} badgeContent={points} max={maximum} >
             { children }
         </StyledBadge>
     );
