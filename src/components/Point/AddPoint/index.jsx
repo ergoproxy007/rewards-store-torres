@@ -5,8 +5,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const AddPoint = (props) => {
-    const { title, pointsGiven, update, loading } = props;
-    const ButtonAddIcon = () => <Tooltip title={title + ': ' + pointsGiven + ' puntos'} aria-label="add">
+    const { text, update, loading } = props;
+    const ButtonAddIcon = () => <Tooltip title={text} aria-label="add">
                                     <Fab color="secondary" onClick={() => { update(); }}><AddIcon /></Fab>
                                 </Tooltip>
     return (

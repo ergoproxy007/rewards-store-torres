@@ -20,8 +20,7 @@ export const StoreProvider = ({ children }) => {
 
     useEffect(() => {
         (async () => {
-          console.count('async UserService.getData');
-          const data = await UserService.getData();
+          const data = await UserService.getMeData();
           setAmount({ initPoints: data.points, points: null, pointsGiven: 0 });
           setUser({ fullName: data.name, points: data.points });
         })()
@@ -39,7 +38,8 @@ export const StoreProvider = ({ children }) => {
 
     const updateAmountPoints = () => {
         setBagdeProps({focusColor: INVISIBLE_COLOR, loading: true});
-        UserService.postData(MIN_AMOUNT)
+
+        UserService.addPoints(MIN_AMOUNT)
                    .then((response) => response.json())
                    .then((data) => {
                         const newPoints = data[newPointsName];

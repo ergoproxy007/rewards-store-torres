@@ -10,8 +10,7 @@ import { AvatarLetters } from 'views/Avatar/AvatarLetters';
 import { AddPoint } from 'components/Point/AddPoint';
 import BadgePointsContainer from 'components/Point/containers/BadgePointsContainer';
 import { withPoints } from 'components/Factory/withPoints';
-
-import "./HeaderShop.css";
+import { useStyles } from './style.js';
 
 const TextOnlyTooltip = withStyles({
     tooltip: {
@@ -35,21 +34,22 @@ const PointsContainer = ({points, badgeProps}) => {
     );
 }
 
-const AddPointContainer = ({title, pointsGiven, loading, update}) => {
+const AddPointContainer = ({clazzName, text, loading, update}) => {
     const ButtonWithPoints = withPoints(AddPoint);
     return (
-        <div className="container-addpoint">
-            <ButtonWithPoints title={title} pointsGiven={pointsGiven} loading={loading} update={update} />
+        <div className={clazzName}>
+            <ButtonWithPoints text={text} loading={loading} update={update} />
         </div>
     );
 }
 
 export const HeaderShop = () => {
-    const subtitle = "haz agregado un total de";
+    const classes = useStyles();
     const {
         data: { user, amount, badgeProps },
         mutations: { updateAmountPoints }
     } = useContext(StoreContext);
+    const text = amount.pointsGiven === 0 ? "recharge points" : "you've added: " + amount.pointsGiven + " points";
     const points = amount.points ? amount.points : user.points;
     return (
         <AppBar position="relative">
@@ -62,11 +62,11 @@ export const HeaderShop = () => {
                     }
                 </IconButton>
                 <TextOnlyTooltip title={<UserName user={user} />} placement="right">
-                    <IconButton style={{ marginLeft: "23px" }}>
+                    <IconButton style={{ marginLeft: "55px" }}>
                         <AvatarLetters user={user} />
                     </IconButton>
                 </TextOnlyTooltip>
-                <AddPointContainer pointsGiven={amount.pointsGiven} loading={badgeProps.loading} title={subtitle} update={updateAmountPoints} />
+                <AddPointContainer clazzName={classes.containerAddpoint} loading={badgeProps.loading} text={text} update={updateAmountPoints} />
             </Toolbar>
         </AppBar>
     );
