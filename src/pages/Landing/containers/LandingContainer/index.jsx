@@ -11,7 +11,7 @@ const StyledContainer = withStyles((props) => {
       root: {
           paddingRight: "80px",
           paddingLeft: "80px",
-          backgroundColor: "#fff",
+          backgroundColor: "#F4F4F4",
           [props.breakpoints.only('xs')]: {
               paddingRight: "0",
               paddingLeft: "0",

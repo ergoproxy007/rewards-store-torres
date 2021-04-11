@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) =>
       marginRight: theme.spacing(2),
      },
      heroContent: {
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: '#F4F4F4',
       padding: theme.spacing(3, 0, 2),
      },
      heroButtons: {

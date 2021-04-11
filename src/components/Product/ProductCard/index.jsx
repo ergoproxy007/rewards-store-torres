@@ -2,11 +2,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import AttachMoney from '@material-ui/icons/AttachMoney';
-import { ReedemButton } from '../ReedemButton';
-import { makeStyles } from '@material-ui/core/styles';
+import { ReedemAction } from '../ReedemAction';
 import { numberWithCommas } from 'config/numbers.util';
+import { useStyles } from './styles';
 
 export const ProductCard = (props) => {
     const classes = useStyles();
@@ -27,38 +25,10 @@ export const ProductCard = (props) => {
                     title={card.name}
         />
         <CardContent className={classes.cardContent}>
-          <Button disabled size="small" color="primary" startIcon={<AttachMoney className={classes.money} />}>
-            <Typography className={classes.cost} variant="h5" >{ card.price }</Typography>
-          </Button>
+          <ReedemAction clazzCost={classes.cost} clazzMoney={classes.money} price={card.price} />
           <Typography color="textSecondary" component="h2">{ card.type }</Typography>
           <Typography gutterBottom variant="h5" component="h2">{ card.name }</Typography>
-          <ReedemButton />
         </CardContent>
       </Card>
     );
 }
-
-const useStyles = makeStyles((theme) => ({
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  money: {
-    color: '#e6c300 !important'
-  },
-  cost: {
-    color: '#ffd700 !important',
-    fontWeight: 'bold',
-  }
-}));
