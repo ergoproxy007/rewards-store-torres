@@ -10,7 +10,7 @@ import { AvatarLetters } from 'views/Avatar/AvatarLetters';
 import { AddPoint } from 'components/Point/AddPoint';
 import BadgePointsContainer from 'components/Point/containers/BadgePointsContainer';
 import { withPoints } from 'components/Factory/withPoints';
-import { RightContainer } from 'components/RightContainer';
+import { RightContainer } from 'views/RightContainer';
 
 const TextOnlyTooltip = withStyles({
     tooltip: {

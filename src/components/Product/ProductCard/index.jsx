@@ -5,7 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import AttachMoney from '@material-ui/icons/AttachMoney';
-import { ReedemAction } from '../ReedemAction';
+import ReedemAction from 'views/ReedemAction';
 import { numberWithCommas } from 'config/numbers.util';
 import { useStyles } from './styles';
 
@@ -44,7 +44,7 @@ export const ProductCard = (props) => {
             clazzCost={classes.cost}
             clazzMoney={classes.money}
             price={card.price}
-            action={<ReedemAction clazzCost={classes.cost} clazzMoney={classes.money} price={card.price} />}
+            action={<ReedemAction card={card} clazzCost={classes.cost} clazzMoney={classes.money} price={card.price} />}
           />
           <Typography color="textSecondary" component="h2">{ card.type }</Typography>
           <Typography gutterBottom variant="h5" component="h2">{ card.name }</Typography>
