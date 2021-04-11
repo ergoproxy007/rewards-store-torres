@@ -10,7 +10,7 @@ import { AvatarLetters } from 'views/Avatar/AvatarLetters';
 import { AddPoint } from 'components/Point/AddPoint';
 import BadgePointsContainer from 'components/Point/containers/BadgePointsContainer';
 import { withPoints } from 'components/Factory/withPoints';
-import { useStyles } from './style.js';
+import { RightContainer } from 'components/RightContainer';
 
 const TextOnlyTooltip = withStyles({
     tooltip: {
@@ -34,17 +34,16 @@ const PointsContainer = ({points, badgeProps}) => {
     );
 }
 
-const AddPointContainer = ({clazzName, text, loading, update}) => {
+const AddPointContainer = ({text, loading, update}) => {
     const ButtonWithPoints = withPoints(AddPoint);
     return (
-        <div className={clazzName}>
+        <RightContainer>
             <ButtonWithPoints text={text} loading={loading} update={update} />
-        </div>
+        </RightContainer>
     );
 }
 
 export const HeaderShop = () => {
-    const classes = useStyles();
     const {
         data: { user, amount, badgeProps },
         mutations: { updateAmountPoints }
@@ -66,7 +65,7 @@ export const HeaderShop = () => {
                         <AvatarLetters user={user} />
                     </IconButton>
                 </TextOnlyTooltip>
-                <AddPointContainer clazzName={classes.containerAddpoint} loading={badgeProps.loading} text={text} update={updateAmountPoints} />
+                <AddPointContainer loading={badgeProps.loading} text={text} update={updateAmountPoints} />
             </Toolbar>
         </AppBar>
     );
