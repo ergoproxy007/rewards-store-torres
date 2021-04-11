@@ -1,19 +1,19 @@
 import { createContext, useEffect, useState } from 'react';
+import { ProductsService } from 'services/products.service';
 import { UserService } from 'services/user.service';
 
 const MIN_AMOUNT = 1000;
 const INVISIBLE_COLOR = '#F43936';
 const newPointsName = 'New Points';
-const initialState = { items: [], 
-                       user: {fullName: '?', points: 0},
+const initialState = { user: {fullName: '?', points: 0},
                        amount: { points: null, initPoints: null, pointsGiven: 0},
-                       badgeProps: {focusColor: '#FFFFFF', loading: false} };
-const jsonItems = [{}]; //crear aquí items de prueba para validar el hooks
+                       badgeProps: {focusColor: '#FFFFFF', loading: false},
+                       products: [] };
 
 export const StoreContext = createContext(initialState);
 
 export const StoreProvider = ({ children }) => {
-    const [allItems, setAllItems] = useState(initialState.items);
+    const [products, setProducts] = useState(initialState.products);
     const [user, setUser] = useState(initialState.user);
     const [amount, setAmount] = useState(initialState.amount);
     const [badgeProps, setBagdeProps] = useState(initialState.badgeProps);
@@ -27,14 +27,24 @@ export const StoreProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
+        (async () => {
+            if (products.length <= 0) {
+                try {
+                    const data = await ProductsService.getData();
+                    setProducts({ data });
+                } catch (e) {
+                    console.error(e);
+                    setProducts( [{}] );
+                }
+            }
+        })()
+    }, [products]);
+
+    useEffect(() => {
         if (user) {
             setUser(user);
         }
     }, [user]);
-
-    useEffect(() => {
-        setAllItems(jsonItems);
-    }, [allItems]);
 
     const updateAmountPoints = () => {
         setBagdeProps({focusColor: INVISIBLE_COLOR, loading: true});
@@ -50,8 +60,8 @@ export const StoreProvider = ({ children }) => {
                    .catch((err) => console.error(err));
     }
     const contextValue = {
-        data: { allItems, user, amount, badgeProps },
-        mutations: { setAllItems, setBagdeProps, updateAmountPoints }
+        data: { products, user, amount, badgeProps },
+        mutations: { setBagdeProps, updateAmountPoints }
     };
     return (
         <StoreContext.Provider value={contextValue}>

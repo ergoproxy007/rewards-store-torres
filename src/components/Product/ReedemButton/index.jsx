@@ -4,8 +4,8 @@ import CardActions from '@material-ui/core/CardActions';
 export const ReedemButton = (props) => {
     return (
         <CardActions>
-            <Button size="small" color="primary">
-                Redimir
+            <Button variant="outlined" color="primary">
+                reedem now
             </Button>
         </CardActions>
     );
