@@ -1,47 +1,19 @@
-import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import { useStyles } from './styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    margin: 'auto',
-    maxWidth: 450,
-  },
-  image: {
-    width: 450,
-    height: 320,
-    [theme.breakpoints.only('xs')]: {
-      width: '110%',
-      height: 200,
-    },
-  },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-  },  
-  typography: {
-      padding: theme.spacing(2),
-      textAlign: 'center'
-  },
-  textAlignCenter: {
-    textAlign: 'center'
-  },
-  itemsCenter: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-}));
-  
+/**
+ * PopUp Component for reedem products
+ * @param card: has the product data
+ * @param open: obligatory data for Popover component, boolean for know if should be open or close
+ * @param id: obligatory data for Popover component
+ * @param anchorEl: determine view position of the Popover component
+ * @param handleClose: close the Popover component
+ */
 export const ReedemPopover = (props) => {
     const { card, open, id, anchorEl, handleClose } = props;
     const classes = useStyles();  

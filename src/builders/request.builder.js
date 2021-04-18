@@ -1,3 +1,6 @@
+/**
+ * Determine http request object for consume API application
+ */
 class RequestBuilder {
   constructor(url, headers) {
     this.url = url;

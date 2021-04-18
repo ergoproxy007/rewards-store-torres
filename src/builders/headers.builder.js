@@ -1,3 +1,6 @@
+/**
+ * Determine http headers info for consume API application
+ */
 class HeaderBuilder {
   constructor(contentType, accept, token) {
       this.contentType = contentType;

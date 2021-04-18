@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+/**
+ * Component for align elements to Right
+ * @param children: content for the container
+ */
 export const RightContainer = (props) => {
     const classes = useStyles();
     return (

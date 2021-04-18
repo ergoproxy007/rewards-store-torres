@@ -3,6 +3,10 @@ import Button from '@material-ui/core/Button';
 import { RightContainer } from 'views/RightContainer';
 import { ReedemPopover } from '../ReedemPopover';
 
+/**
+ * Button Reedem Component for reedem products
+ * @param card: has the product data
+ */
 export default function ReedemAction(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
