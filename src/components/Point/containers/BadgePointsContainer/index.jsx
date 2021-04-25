@@ -17,10 +17,10 @@ const StyledBadge = withStyles((theme) => ({
 
 /* applying pattern container  */
 const BadgePointsContainer = (props) => {
-    const {colorType, points, maximum, badgeProps, children} = props;
-    const coins = numberWithCommas(points).concat(config.MONEY);
+    const {colorType, points, maximum, focusColor, children} = props;
+    const coins = points > maximum ? maximum.toString().concat('+') : numberWithCommas(points).concat(config.MONEY);
     return (
-        <StyledBadge focusColor={badgeProps.focusColor} color={colorType} badgeContent={coins} max={maximum} >
+        <StyledBadge focusColor={focusColor} color={colorType} badgeContent={coins} max={maximum} >
             { children }
         </StyledBadge>
     );

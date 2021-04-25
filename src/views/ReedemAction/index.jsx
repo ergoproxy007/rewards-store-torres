@@ -16,7 +16,7 @@ export default function ReedemAction(props) {
         setAnchorEl(null);
     };
     const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
+    const id = open ? 'product-popover' : undefined;
     return (
         <RightContainer>
             <Button aria-describedby={id} size="small" variant="outlined" color="primary"

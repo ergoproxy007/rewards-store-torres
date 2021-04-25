@@ -7,12 +7,12 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import { useStyles } from './styles';
 
 /**
- * PopUp Component for reedem products
+ * Component "PopUp" for reedem products
  * @param card: has the product data
- * @param open: obligatory data for Popover component, boolean for know if should be open or close
- * @param id: obligatory data for Popover component
- * @param anchorEl: determine view position of the Popover component
- * @param handleClose: close the Popover component
+ * @param open: [component props] obligatory data for Popover, boolean for know if should be open or close
+ * @param id: [component props]  obligatory data for Popover
+ * @param anchorEl:  [component props, hooks] determine the type of anchorReference (position)
+ * @param handleClose:  [component props] close the Popover
  */
 export const ReedemPopover = (props) => {
     const { card, open, id, anchorEl, handleClose } = props;

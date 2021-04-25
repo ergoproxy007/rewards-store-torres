@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { StoreContext } from 'context/StoreContext';
+import { getBadgeProps } from 'context/helper/store.helper';
 import AppBar from '@material-ui/core/AppBar';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,6 +12,7 @@ import { AddPoint } from 'components/Point/AddPoint';
 import BadgePointsContainer from 'components/Point/containers/BadgePointsContainer';
 import { withPoints } from 'components/Factory/withPoints';
 import { RightContainer } from 'views/RightContainer';
+import { AmountPropertiesBuilder } from 'builders/amount.props.builder';
 
 const TextOnlyTooltip = withStyles({
     tooltip: {
@@ -26,37 +28,37 @@ const UserName = ({user}) => {
     return <span style={styles}>{name}</span>
 }
 
-const PointsContainer = ({points, badgeProps}) => {
+const PointsContainer = ({points, focusColor}) => {
     return (
-        <BadgePointsContainer colorType={"error"} maximum={999999} points={points} badgeProps={badgeProps}>
+        <BadgePointsContainer colorType={"error"} maximum={999999} points={points} focusColor={focusColor}>
             <ShoppingCartIcon style={{ fontSize: 35, color: "#FFD700" }} />
         </BadgePointsContainer>
     );
 }
 
-const AddPointContainer = ({text, loading, update}) => {
+const CreateAddPoint = ({theme, title, text, badgeProps, update}) => {
+    const loading = badgeProps ? badgeProps.loading : false;
     const ButtonWithPoints = withPoints(AddPoint);
     return (
-        <RightContainer>
-            <ButtonWithPoints text={text} loading={loading} update={update} />
-        </RightContainer>
+        <ButtonWithPoints theme={theme} title={title} text={text} loading={loading} update={update} />
     );
 }
 
 export const HeaderShop = () => {
     const {
-        data: { user, amount, badgeProps },
+        data: { user, amount, badgePropsLow, badgePropsMiddle, badgePropsHigh },
         mutations: { updateAmountPoints }
     } = useContext(StoreContext);
-    const text = amount.pointsGiven === 0 ? "recharge points" : "you've added: " + amount.pointsGiven + " points";
+    const title = amount.pointsGiven === 0 ? "recharge points" : "you've added: " + amount.pointsGiven + " points";
     const points = amount.points ? amount.points : user.points;
+    const amountsProps = new AmountPropertiesBuilder().build();
     return (
-        <AppBar position="relative">
+        <AppBar position="relative" style={{ background : '#2E3B55' }}>
             <Toolbar>
                 <IconButton aria-label="cart">
                     {
                         points > 0 
-                        ? <PointsContainer points={points} badgeProps={badgeProps} />
+                        ? <PointsContainer points={points} focusColor={badgePropsLow.focusColor} />
                         : <ShoppingCartIcon style={{ fontSize: 35, color: "#FFD700" }} />
                     }
                 </IconButton>
@@ -65,7 +67,21 @@ export const HeaderShop = () => {
                         <AvatarLetters user={user} />
                     </IconButton>
                 </TextOnlyTooltip>
-                <AddPointContainer loading={badgeProps.loading} text={text} update={updateAmountPoints} />
+                <RightContainer>
+                    {
+                        amountsProps.map((ap) => (
+                            <CreateAddPoint
+                                key={ap.value}
+                                value={ap.value}
+                                title={title}
+                                theme={ap.theme}
+                                badgeProps={getBadgeProps(ap.value, badgePropsLow, badgePropsMiddle, badgePropsHigh)}
+                                text={ap.text}
+                                update={() => updateAmountPoints(ap.value)}
+                            />
+                        ))
+                    }
+                </RightContainer>
             </Toolbar>
         </AppBar>
     );
