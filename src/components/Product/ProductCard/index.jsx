@@ -25,6 +25,7 @@ export const ProductCard = (props) => {
     const classes = useStyles();
     const { product } = props;
     const card = {
+        id: product._id,
         img: product.img.url,
         imgHd: product.img.hdUrl,
         name: product.name,

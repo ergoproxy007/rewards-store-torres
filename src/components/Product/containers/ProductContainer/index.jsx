@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const DrawerProductContainer = ({productsFiltered,model,handleChange}) => {
+const DrawerProductContainer = ({productsFiltered,model,handleChange,reedem}) => {
     const classes = useStyles();
     const lazyCount = [1,2,3];
     return (
@@ -32,7 +32,7 @@ const DrawerProductContainer = ({productsFiltered,model,handleChange}) => {
                     ? (
                         productsFiltered.map((product) => (
                             <Grid key={product.id} item xs={12} sm={6} md={4}>
-                                <ProductCard product={product} />
+                                <ProductCard product={product} reedem={reedem} />
                             </Grid>
                         ))
                     )

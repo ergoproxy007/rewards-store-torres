@@ -10,6 +10,7 @@ const initialState = { user: {fullName: '?', points: 0},
                        badgePropsLow: {amount: config.LOW, focusColor: '#FFFFFF', loading: false},
                        badgePropsMiddle: {amount: config.MIDDLE, focusColor: '#FFFFFF', loading: false},
                        badgePropsHigh: {amount: config.HIGH, focusColor: '#FFFFFF', loading: false},
+                       reedemMessage: {id: null, missing: false, loading: false, ready: false, message: null},
                        products: [] };
 
 export const StoreContext = createContext(initialState);
@@ -21,6 +22,7 @@ export const StoreProvider = ({ children }) => {
     const [badgePropsLow, setBagdePropsLow] = useState(initialState.badgePropsLow);
     const [badgePropsMiddle, setBagdePropsMiddle] = useState(initialState.badgePropsMiddle);
     const [badgePropsHigh, setBagdePropsHigh] = useState(initialState.badgePropsHigh);
+    const [reedemMessage, setReedemMessage] = useState(initialState.reedemMessage);
 
     useEffect(() => {
         (async () => {
@@ -50,18 +52,15 @@ export const StoreProvider = ({ children }) => {
         }
     }, [user]);
 
-    const setBagdeProps = (amount, badgeProps) => {
-        switch (amount) {
+    const setBagdeProps = (valueAmount, badgeProps) => {
+        switch (valueAmount) {
             case config.LOW:
-                console.count('config.LOW');
                 setBagdePropsLow(badgeProps);
                 break;
             case config.MIDDLE:
-                console.count('config.MIDDLE');
                 setBagdePropsMiddle(badgeProps);
                 break;
             case config.HIGH:
-                console.count('config.HIGH');
                 setBagdePropsHigh(badgeProps);
                 break;
             default:
@@ -69,22 +68,45 @@ export const StoreProvider = ({ children }) => {
                 break;
         }
     }
-    const updateAmountPoints = (amount) => {
-        setBagdeProps(amount, {focusColor: INVISIBLE_COLOR, loading: true});
+    const updateAmountPoints = (valueAmount) => {
+        setBagdeProps(valueAmount, {focusColor: INVISIBLE_COLOR, loading: true});
 
-        UserService.addPoints(amount)
+        UserService.addPoints(valueAmount)
                    .then((response) => response.json())
                    .then((data) => {
                         const newPoints = data[newPointsName];
                         const lastPoints = newPoints - amount.initPoints;
                         setAmount({ points: newPoints, initPoints: amount.initPoints, pointsGiven: lastPoints });
-                        setBagdeProps(amount, initialState.badgePropsLow);
+                        setBagdeProps(valueAmount, initialState.badgePropsLow);
+                        setReedemMessage({ ready: false, missing: false, loading: false, message: data.message });
                    })
                    .catch((err) => console.error(err));
     }
+    const reedem = (amount, product, handleClose, handleOpen) => {
+        setReedemMessage({ ready: false, id: product.id, missing: false, loading: true, message: null });
+
+        const points = amount.points ? amount.points : amount.initPoints;
+        if (product.cost <= points) {
+            UserService.reedem(product.id)
+                        .then((response) => response.json())
+                        .then((data) => {
+                                updateForReedem(points, product.cost, amount, data.message, handleOpen);
+                        })
+                        .catch((err) => console.error(err));
+        } else {
+            const missingPoints = product.cost - points;
+            setReedemMessage({ ready: false, id: product.id, missing: true, loading: false, message: `Reedem canceled! ${missingPoints} points are needed` });
+        }
+    }
+    const updateForReedem = (points, cost, amount, message, handleOpen) => {
+        const newPoints = points - cost;
+        setAmount({ points: newPoints, initPoints: amount.initPoints, pointsGiven: amount.pointsGiven });
+        setReedemMessage({ ready: true, missing: false, loading: false, message: message });
+        handleOpen();
+    }
     const contextValue = {
-        data: { products, user, amount, badgePropsLow, badgePropsMiddle, badgePropsHigh },
-        mutations: { setBagdePropsLow, setBagdePropsMiddle, setBagdePropsHigh, updateAmountPoints }
+        data: { products, user, amount, reedemMessage, badgePropsLow, badgePropsMiddle, badgePropsHigh },
+        mutations: { setBagdePropsLow, setBagdePropsMiddle, setBagdePropsHigh, updateAmountPoints, reedem }
     };
     return (
         <StoreContext.Provider value={contextValue}>
