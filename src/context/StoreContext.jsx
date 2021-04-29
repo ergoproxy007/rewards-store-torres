@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { ProductsService } from 'services/products.service';
 import { UserService } from 'services/user.service';
+import { numberWithCommas } from 'config/numbers.util';
 import config from 'config/config';
 
 const INVISIBLE_COLOR = '#F43936';
@@ -10,7 +11,7 @@ const initialState = { user: {fullName: '?', points: 0},
                        badgePropsLow: {amount: config.LOW, focusColor: '#FFFFFF', loading: false},
                        badgePropsMiddle: {amount: config.MIDDLE, focusColor: '#FFFFFF', loading: false},
                        badgePropsHigh: {amount: config.HIGH, focusColor: '#FFFFFF', loading: false},
-                       reedemMessage: {id: null, missing: false, loading: false, ready: false, message: null},
+                       reedemMessage: {id: null, missing: false, loading: false, message: null},
                        products: [] };
 
 export const StoreContext = createContext(initialState);
@@ -82,12 +83,12 @@ export const StoreProvider = ({ children }) => {
                         const lastPoints = newPoints - amount.initPoints;
                         setAmount({ points: newPoints, initPoints: amount.initPoints, pointsGiven: lastPoints });
                         setBagdeProps(valueAmount, initialState.badgePropsLow);
-                        setReedemMessage({ ready: false, missing: false, loading: false, message: data.message });
+                        setReedemMessage({ missing: false, loading: false, message: data.message });
                    })
                    .catch((err) => console.error(err));
     }
     const reedem = (amount, product, handleClose, handleOpen) => {
-        setReedemMessage({ ready: false, id: product.id, missing: false, loading: true, message: null });
+        setReedemMessage({ id: product.id, missing: false, loading: true, message: null });
 
         const points = amount.points ? amount.points : amount.initPoints;
         if (product.cost <= points) {
@@ -98,14 +99,15 @@ export const StoreProvider = ({ children }) => {
                         })
                         .catch((err) => console.error(err));
         } else {
-            const missingPoints = product.cost - points;
-            setReedemMessage({ ready: false, id: product.id, missing: true, loading: false, message: `Reedem canceled! ${missingPoints} points are needed` });
+            const missingPoints = numberWithCommas(product.cost - points);
+            setReedemMessage({ id: product.id, missing: true, loading: false,
+                               message: `Reedem canceled! ${missingPoints} points are needed` });
         }
     }
     const updateForReedem = (points, cost, amount, message, handleOpen) => {
         const newPoints = points - cost;
         setAmount({ points: newPoints, initPoints: amount.initPoints, pointsGiven: amount.pointsGiven });
-        setReedemMessage({ ready: true, missing: false, loading: false, message: message });
+        setReedemMessage({ missing: false, loading: false, message: message });
         handleOpen();
     }
     const contextValue = {

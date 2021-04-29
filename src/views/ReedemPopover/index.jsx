@@ -8,6 +8,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useStyles } from './styles';
 import { AlertDialog } from 'views/AlertDialog';
+import { Alert } from 'views/Alert';
 import config from 'config/config';
 import { numberWithCommas } from 'config/numbers.util';
 
@@ -23,7 +24,9 @@ const ProductDescriptionGrid = ({ clazzName, id, name, price, reedemMessage }) =
       </Typography>
       {
         missing
-        ? <Typography gutterBottom variant="h6" color="error">{reedemMessage.message}</Typography>
+        ? <Alert severity="error">
+            <Typography gutterBottom variant="body1">{reedemMessage.message}</Typography>
+          </Alert>
         : null
       }
     </Grid>
@@ -60,7 +63,7 @@ export const ReedemPopover = (props) => {
     const { amount, card, open, id, anchorEl, handleClose, reedem, reedemMessage } = props;
     const points = amount && amount.points ? amount.points : 0;
     const textMoney = 'The product has been successfully redeemed.';
-    const footerText = `${config.MONEY} ${numberWithCommas(points)} is your actual poinst's budget.`;
+    const footerText = `${config.MONEY} ${numberWithCommas(points)} is your current point budget.`;
     const classes = useStyles();
     const [openDialog, setOpenDialog] = useState(false);
     const handleOpenDialog = () => {
