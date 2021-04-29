@@ -5,8 +5,11 @@ import { RightContainer } from 'views/RightContainer';
 import { ReedemPopover } from '../ReedemPopover';
 
 /**
- * Button Reedem Component for reedem products
+ * @return Button Reedem Component for reedem products
  * @param card: has the product data
+ * @param amount: [global state] show the current points
+ * @param reedemMessage: [global state] valid if product can be reedem or not
+ * @param reedem: [global state] callback api for reedem product
  */
 export default function ReedemAction(props) {
     const {

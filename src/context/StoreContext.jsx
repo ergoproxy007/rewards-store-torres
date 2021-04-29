@@ -15,6 +15,10 @@ const initialState = { user: {fullName: '?', points: 0},
 
 export const StoreContext = createContext(initialState);
 
+/**
+ * define the global state for main features concerns the users, products, reedemptions 
+ * @returns context created
+ */
 export const StoreProvider = ({ children }) => {
     const [products, setProducts] = useState(initialState.products);
     const [user, setUser] = useState(initialState.user);
@@ -105,8 +109,22 @@ export const StoreProvider = ({ children }) => {
         handleOpen();
     }
     const contextValue = {
-        data: { products, user, amount, reedemMessage, badgePropsLow, badgePropsMiddle, badgePropsHigh },
-        mutations: { setBagdePropsLow, setBagdePropsMiddle, setBagdePropsHigh, updateAmountPoints, reedem }
+        data: { 
+                products,
+                user,
+                amount,
+                reedemMessage,
+                badgePropsLow,
+                badgePropsMiddle,
+                badgePropsHigh
+        },
+        mutations: {
+                    setBagdePropsLow,
+                    setBagdePropsMiddle,
+                    setBagdePropsHigh,
+                    updateAmountPoints,
+                    reedem
+       }
     };
     return (
         <StoreContext.Provider value={contextValue}>

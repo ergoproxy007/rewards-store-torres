@@ -46,17 +46,21 @@ const ReedemButtonsGrid = ({ clazzName, handleClose, handleClickOpen, amount, ca
 }
 
 /**
- * Component "PopUp" for reedem products
+ * @returns Component "PopUp" for reedem products
+ * @param amount: [global state] show the current points
  * @param card: has the product data
  * @param open: [component props] obligatory data for Popover, boolean for know if should be open or close
  * @param id: [component props]  obligatory data for Popover
- * @param anchorEl:  [component props, hooks] determine the type of anchorReference (position)
- * @param handleClose:  [component props] close the Popover
+ * @param anchorEl: [component props, hooks] determine the type of anchorReference (position)
+ * @param handleClose: [component props] close the Popover
+ * @param reedem: [global state] callback api for reedem product
+ * @param reedemMessage: [global state] valid if product can be reedem or not
  */
 export const ReedemPopover = (props) => {
     const { amount, card, open, id, anchorEl, handleClose, reedem, reedemMessage } = props;
-    const textMoney = `The product has been successfully redeemed.`;
-    const footerText = `${config.MONEY} ${numberWithCommas(amount.points)} is your actual poinst's budget.`;
+    const points = amount && amount.points ? amount.points : 0;
+    const textMoney = 'The product has been successfully redeemed.';
+    const footerText = `${config.MONEY} ${numberWithCommas(points)} is your actual poinst's budget.`;
     const classes = useStyles();
     const [openDialog, setOpenDialog] = useState(false);
     const handleOpenDialog = () => {
