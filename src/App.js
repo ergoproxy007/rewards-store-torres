@@ -1,10 +1,30 @@
-import LandingContainer from 'pages/Landing/containers/LandingContainer';
-import { StoreProvider } from "./context/StoreContext";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import { LandingPage } from "pages/Landing";
+import { HistoryPage } from "pages/History";
+import { ConditionalRoute } from "components/ConditionalRoute";
 
 export default function App() {
   return (
-    <StoreProvider>
-      <LandingContainer />  
-    </StoreProvider>
+    <Router>
+      <Switch>
+        <ConditionalRoute
+          path="/history"
+          redirectTo="/history"
+          canActivate={true}
+          component={HistoryPage}
+        />
+        <ConditionalRoute 
+          path="/"
+          redirectTo="/landing"
+          canActivate={true}
+          component={LandingPage}
+        />
+      </Switch>
+    </Router>
   );
 }
