@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/rewards-store-torres/static/css/main.2ae47eeb.chunk.css",
+    "main.js": "/rewards-store-torres/static/js/main.dc1d299e.chunk.js",
+    "main.js.map": "/rewards-store-torres/static/js/main.dc1d299e.chunk.js.map",
+    "runtime-main.js": "/rewards-store-torres/static/js/runtime-main.498b84c7.js",
+    "runtime-main.js.map": "/rewards-store-torres/static/js/runtime-main.498b84c7.js.map",
+    "static/js/2.d0ac3a51.chunk.js": "/rewards-store-torres/static/js/2.d0ac3a51.chunk.js",
+    "static/js/2.d0ac3a51.chunk.js.map": "/rewards-store-torres/static/js/2.d0ac3a51.chunk.js.map",
+    "index.html": "/rewards-store-torres/index.html",
+    "static/css/main.2ae47eeb.chunk.css.map": "/rewards-store-torres/static/css/main.2ae47eeb.chunk.css.map",
+    "static/js/2.d0ac3a51.chunk.js.LICENSE.txt": "/rewards-store-torres/static/js/2.d0ac3a51.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.498b84c7.js",
+    "static/js/2.d0ac3a51.chunk.js",
+    "static/css/main.2ae47eeb.chunk.css",
+    "static/js/main.dc1d299e.chunk.js"
+  ]
+}
