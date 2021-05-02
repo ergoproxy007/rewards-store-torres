@@ -3,19 +3,15 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import AttachMoney from '@material-ui/icons/AttachMoney';
 import ReedemAction from 'views/ReedemAction';
 import { numberWithCommas } from 'config/numbers.util';
 import { useStyles } from './styles';
+import { LabelPrice } from 'views/LabelPrice';
 
-const Price = ({ clazzMoney, clazzCost, price, action }) => {
-  const value = <Button disabled size="small" color="primary" startIcon={<AttachMoney className={clazzMoney} />}>
-                 <Typography className={clazzCost} variant="h5" >{ price }</Typography>
-                </Button>
+const Price = ({ price, action }) => {
   return (
     <CardActions>
-      { value }
+      <LabelPrice price={price} />
       { action }
     </CardActions>
   );
@@ -42,8 +38,6 @@ export const ProductCard = (props) => {
         />
         <CardContent className={classes.cardContent}>
           <Price
-            clazzCost={classes.cost}
-            clazzMoney={classes.money}
             price={card.price}
             action={<ReedemAction card={card} clazzCost={classes.cost} clazzMoney={classes.money} price={card.price} />}
           />
