@@ -26,6 +26,11 @@ export const useStyles = makeStyles((theme) =>
      },
      cardContent: {
       flexGrow: 1,
-     }
+     },
+     title: {
+      [theme.breakpoints.only('xs')]: {
+        fontSize: '1.9rem',
+      },
+    },
   })
 );

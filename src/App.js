@@ -1,8 +1,6 @@
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+  Switch
 } from "react-router-dom";
 import { LandingPage } from "pages/Landing";
 import { HistoryPage } from "pages/History";

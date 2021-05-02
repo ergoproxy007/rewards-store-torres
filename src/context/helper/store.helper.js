@@ -13,3 +13,9 @@ export const getBadgeProps = (amount, badgePropsLow, badgePropsMiddle, badgeProp
             return null;
     }
 }
+
+export const orders = [
+    {text:'None', value:''},
+    {text:'Price: Low - High', value:'asc'},
+    {text:'Price: High - Low', value:'desc'}
+];

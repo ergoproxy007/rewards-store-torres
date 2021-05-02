@@ -28,7 +28,7 @@ const DrawerListRowItemsContainer = ({productsFiltered,model,handleChange}) => {
       <List className={classes.root}>
           {
             productsFiltered?.map((product, index) => (
-              <RowItem item={product} index={(index+range)} />
+              <RowItem key={(index+range)} item={product} index={(index+range)} />
             ))
           }
       </List>
