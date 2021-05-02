@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   
 function Copyright() {
     return (
-      <Typography variant="body2" color="textSecondary" align="center">
+      <Typography variant="h6" color="textSecondary" align="center">
         {'Copyright © '}
         {new Date().getFullYear()}
         {'.'}
@@ -47,12 +47,13 @@ export const FooterShop = (props) => {
             <Typography variant="h6" align="center" color="black" component="p">
                 Developed by Daniel Torres Ruiz
             </Typography>
+
             <RatingFooter />
 
             <Typography align="center" color="textSecondary" component="p">
               <LinkedIn />
+              {' | '}
               <GitHub />
-              {' '}
             </Typography>
             <Copyright />
         </footer>

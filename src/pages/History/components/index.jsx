@@ -45,7 +45,7 @@ export default function FullScreenDialogHistory(props) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>Reedem Products History</Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>start</Button>
+            <Button autoFocus color="inherit">total: {products.data.length}</Button>
           </Toolbar>
         </AppBar>
         <ListRowItemsContainer products={products.data} />

@@ -9,7 +9,7 @@ export default function RatingFooter() {
   const FIVE = 5;
   return (
     <div>
-    <Grid container >
+    <Grid container direction="row" justify="center" alignItems="center" style={{marginTop:'8px'}}>
         <Grid item>
             <Box component="fieldset" mb={1} borderColor="transparent">
                 <Typography component="legend" color="primary">React</Typography>

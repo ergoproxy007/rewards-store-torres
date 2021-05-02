@@ -29,3 +29,5 @@ https://medium.com/nerd-for-tech/using-react-context-the-right-way-cf5e011dc4ba
 https://parrot.acamica.com/encuentros/29?group=FAR-ONLINE-SUMA-2
 7. hooks oficial:
 https://reactjs.org/docs/hooks-reference.html#usecontext
+8. deploy in gh-pages:
+https://platzi.com/tutoriales/1548-react/4065-guia-para-usar-github-pages-en-tus-proyectos-de-reactjs/
