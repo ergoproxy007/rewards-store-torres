@@ -1,6 +1,9 @@
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import RatingFooter from './RatingFooter';
 
 const useStyles = makeStyles((theme) => ({
     footer: {
@@ -13,21 +16,43 @@ function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="https://www.linkedin.com/in/daniel-arafat-torres-ruiz-59743813a/">
-          Daniel Torres
-        </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
       </Typography>
     );
 }
 
+function LinkedIn() {
+  return (
+    <Link color="inherit" href="https://www.linkedin.com/in/daniel-arafat-torres-ruiz-59743813a/">
+      <LinkedInIcon fontSize="large" />
+      <span style={{ verticalAlign: 'super'}}>LinkedIn Profile</span>
+    </Link>
+  );
+}
+
+function GitHub() {
+  return (
+    <Link color="inherit" href="https://github.com/ergoproxy007">
+        <GitHubIcon fontSize="large" />
+        <span style={{ verticalAlign: 'super'}}>GitHub Community</span>
+    </Link>
+  );
+}
+
 export const FooterShop = (props) => {
     const classes = useStyles();
     return (
         <footer className={classes.footer}>
-            <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                Something here to give the footer a purpose!
+            <Typography variant="h6" align="center" color="black" component="p">
+                Developed by Daniel Torres Ruiz
+            </Typography>
+            <RatingFooter />
+
+            <Typography align="center" color="textSecondary" component="p">
+              <LinkedIn />
+              <GitHub />
+              {' '}
             </Typography>
             <Copyright />
         </footer>

@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import BackspaceIcon from '@material-ui/icons/Backspace';
+import Typography from '@material-ui/core/Typography';
 import { PaginationItems } from 'components/PaginationItems';
 import { ProductSkeleton } from 'components/Product/ProductSkeleton';
-import { PaginationModel } from 'model/pagination.model';
 import { ProductCard } from '../../ProductCard';
 import NativeSelects from 'views/NativeSelects';
 import config from 'config/config';
-import { filterOrderBy, filterCategory } from 'config/products.filter.util';
 import { orders } from 'context/helper/store.helper';
+import { ProductFilterModel } from 'model/product.filter.model';
 
 const useStyles = makeStyles((theme) => 
     createStyles({
@@ -47,30 +49,69 @@ const GridProducts = ({productsFiltered,model,handleChange,reedem,center}) => {
     );
 }
 
+const ClearButton = ({handleClear}) => {
+    return (
+        <IconButton onClick={handleClear}>
+            <BackspaceIcon style={{ marginRight: '10px' }}/>
+            <Typography variant="h6" align="center" color="textSecondary">Clear</Typography>
+        </IconButton>
+    );
+}
+
+const GridSelects = ({categories,handleOrderByCost,handleFilterCategory,count}) => {
+    const NONE = 'None';
+    const ALL = 'All';
+    const [currentPriceOption, setCurrentPriceOption] = useState('');
+    const [currentCategoriesOption, setCurrentCategoriesOption] = useState('');
+    const handleClear = () => {
+        setCurrentPriceOption(NONE);
+        setCurrentCategoriesOption(ALL);
+        handleOrderByCost('');
+        handleFilterCategory('All');
+    }
+    return (
+        <Grid container spacing={4}>
+            <Grid item xs={4} md={3}>
+                <NativeSelects
+                    label={"Order by"}
+                    results={"Results by price"}
+                    options={orders}
+                    handleChangeOrderBy={handleOrderByCost}
+                    handleCurrentOption={setCurrentPriceOption}
+                    currentOption={currentPriceOption}
+                    defaultValue={NONE}
+                />
+            </Grid>
+            <Grid item xs={4} md={3}>
+                <NativeSelects
+                    label={"Categories"}
+                    results={"Count: ".concat(count)}
+                    options={categories}
+                    handleChangeOrderBy={handleFilterCategory}
+                    handleCurrentOption={setCurrentCategoriesOption}
+                    currentOption={currentCategoriesOption}
+                    defaultValue={ALL}
+                />
+            </Grid>
+            <Grid item xs={4} md={3}>
+                <ClearButton handleClear={handleClear} />
+            </Grid>
+        </Grid>
+    );
+}
+
 const DrawerProductContainer = ({productsFiltered,model,categories,
                                  handleChange,handleOrderByCost,
                                  handleFilterCategory,reedem,count}) => {
     const classes = useStyles();
     return (
         <Container className={classes.cardGrid} maxWidth="md">
-            <Grid container spacing={4}>
-                <Grid item >
-                    <NativeSelects
-                        label={"Order by"}
-                        results={"Results by price"}
-                        options={orders}
-                        handleChangeOrderBy={handleOrderByCost}
-                    />
-                </Grid>
-                <Grid item >
-                    <NativeSelects
-                        label={"Categories"}
-                        results={"Count: ".concat(count)}
-                        options={categories}
-                        handleChangeOrderBy={handleFilterCategory}
-                    />
-                </Grid>
-            </Grid>
+            <GridSelects  
+                categories={categories}
+                handleOrderByCost={handleOrderByCost}
+                handleFilterCategory={handleFilterCategory}
+                count={count}
+            />
             <GridProducts
                 productsFiltered={productsFiltered}
                 model={model}
@@ -89,27 +130,22 @@ const ProductContainer = (props) => {
     const [categoryFiltered, setCategoryFiltered] = useState(ALL);
     const [page, setPage] = useState(1);
     const { products, categories, productsClone } = props;
-    const dataCategoryWithFilter = categoryFiltered === ALL ? { original: products, filtered: null, page: page } : filterCategory(products, categoryFiltered);
-    const dataCategory = dataCategoryWithFilter.filtered ? dataCategoryWithFilter.filtered: dataCategoryWithFilter.original;
-    const dataOrderByWithFilter = filterOrderBy(dataCategory, orderBy, dataCategoryWithFilter.page);
-    const dataOrderBy = dataOrderByWithFilter.filtered ? dataOrderByWithFilter.filtered: dataOrderByWithFilter.original;
-    const model = new PaginationModel(dataOrderBy, range).setCurrentPage(dataOrderByWithFilter.page);
-    const productsFiltered = model.getDataFiltered();
     const lengthClone = productsClone?.length > 0 ? productsClone.length : 0;
-    const lengthFiltered = productsFiltered?.length > 0 ? productsFiltered.length : 0;
-    const count = categoryFiltered === ALL ? lengthClone : lengthFiltered;
+    const productFilterModel = new ProductFilterModel(
+                                     categoryFiltered, orderBy, products,
+                                     page, range, lengthClone).build();
     const handleChange = (event, value) => setPage(value);
     const handleChangeOrderBy = (value) => setOrderBy(value);
     const handleCategoryFiltered = (category) => setCategoryFiltered(category);
     return (
           <DrawerProductContainer
-            productsFiltered={productsFiltered}
-            model={model}
+            productsFiltered={productFilterModel.productsFiltered}
+            model={productFilterModel.model}
             categories={categories}
+            count={productFilterModel.count}
             handleChange={handleChange}
             handleOrderByCost={handleChangeOrderBy}
             handleFilterCategory={handleCategoryFiltered}
-            count={count}
           />
     );
 }

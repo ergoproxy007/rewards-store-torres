@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NativeSelects(props) {
-  const { label, results, options, handleChangeOrderBy } = props;
+  const { label, results, options, handleChangeOrderBy, handleCurrentOption, currentOption, defaultValue } = props;
   const classes = useStyles();
-  const [state, setState] = React.useState({text:''});
+  const [state, setState] = React.useState({text:currentOption});
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -27,6 +27,7 @@ export default function NativeSelects(props) {
       [name]: event.target.value,
     });
     handleChangeOrderBy(value);
+    handleCurrentOption(value);
   };
   return (
     <div>
@@ -35,7 +36,7 @@ export default function NativeSelects(props) {
           {label}
         </InputLabel>
         <NativeSelect
-          value={state.text}
+          value={currentOption === defaultValue ? defaultValue : state.text}
           onChange={handleChange}
           inputProps={{
             name: 'text',
@@ -43,8 +44,8 @@ export default function NativeSelects(props) {
           }}
         >
           {
-            options?.map(option => (
-              <option key={option.value} value={option.value}>{option.text}</option>
+            options?.map((option, index) => (
+              <option key={index} value={option.value}>{option.text}</option>
             ))
           }
         </NativeSelect>
