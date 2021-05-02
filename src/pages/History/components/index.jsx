@@ -36,6 +36,7 @@ export default function FullScreenDialogHistory(props) {
     history.push("/landing");
   };
   const { open } = props;
+  const count = products.data && products.data?.length ? products.data.length : 0;
   return (
     <div>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -45,7 +46,7 @@ export default function FullScreenDialogHistory(props) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>Reedem Products History</Typography>
-            <Button autoFocus color="inherit">total: {products.data.length}</Button>
+            <Button autoFocus color="inherit">total: {count}</Button>
           </Toolbar>
         </AppBar>
         <ListRowItemsContainer products={products.data} />
